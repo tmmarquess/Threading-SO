@@ -2,30 +2,35 @@ import threading
 import random
 import time
 
+
 class bcolors:
-    OK = '\033[92m' #GREEN
-    WARNING = '\033[93m' #YELLOW
-    FAIL = '\033[91m' #RED
-    RESET = '\033[0m' #RESET COLOR
+    OK = "\033[92m"  # GREEN
+    WARNING = "\033[93m"  # YELLOW
+    FAIL = "\033[91m"  # RED
+    RESET = "\033[0m"  # RESET COLOR
 
 
 buffer = []
-tam = 10 # tamanho máximo do buffer
+tam = 10  # tamanho máximo do buffer
 semaforo = threading.Semaphore()
 
-def inserir_no_buffer(vlr : int):
+
+def inserir_no_buffer(vlr: int):
     if len(buffer) < tam:
         buffer.append(vlr)
     else:
         raise IndexError
 
+
 def produzir_item():
-    return random.randint(1,10)
+    return random.randint(1, 10)
+
 
 def consumir_item():
     valor = buffer[0]
     buffer.remove(valor)
     return valor
+
 
 def produtor():
     while True:
@@ -33,7 +38,7 @@ def produtor():
             valor = produzir_item()
             semaforo.acquire()
             inserir_no_buffer(valor)
-            print(f"{bcolors.OK}"+"Inserindo "+ str(valor)+ f"{bcolors.RESET}")
+            print(f"{bcolors.OK}Inserindo {str(valor)} {bcolors.RESET}")
             semaforo.release()
 
 
@@ -42,7 +47,7 @@ def consumidor():
         if len(buffer) != 0:
             semaforo.acquire()
             valor = consumir_item()
-            print(f"{bcolors.FAIL}"+"Consumindo "+ str(valor)+ f"{bcolors.RESET}")
+            print(f"{bcolors.FAIL}Consumindo {str(valor)} {bcolors.RESET}")
             semaforo.release()
 
 
