@@ -1,5 +1,6 @@
 import threading
 import random
+import time
 
 
 class bcolors: #Classe para imprimir texto colorido no terminal
@@ -39,6 +40,7 @@ def produtor():
             inserir_no_buffer(valor) # insere o valor no buffer
             print(f"{bcolors.OK}Inserindo {str(valor)} {bcolors.RESET}") # imprime o valor inserido
             semaforo.release() # solta o semáforo do buffer
+            time.sleep(1) # Delay de produção de dados
 
 
 def consumidor():
@@ -48,6 +50,7 @@ def consumidor():
             valor = consumir_item() # Consome um item
             print(f"{bcolors.FAIL}Consumindo {str(valor)} {bcolors.RESET}") #imprime o valor consumido
             semaforo.release() # solta o semáforo do buffer
+            time.sleep(2) # Delay de consumo de dados
 
 
 thread_produtor = threading.Thread(target=produtor)
