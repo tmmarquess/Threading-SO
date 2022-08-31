@@ -18,7 +18,7 @@ escritor_quer_escrever = False # booleano que impede mais leitores de entrar, ca
 def leitor(number : int):
     global contador_de_leitores, escritor_quer_escrever
     while True:
-        if not escritor_quer_escrever:
+        if not escritor_quer_escrever: #Se o escritor não quiser escrever, 
             sem_leitores.acquire() # Reserva o semáforo de leitores
             contador_de_leitores += 1 # Incrementa +1 leitor no contador
             if contador_de_leitores == 1: # Se for o primeiro leitor, 
